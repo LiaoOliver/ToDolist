@@ -4,7 +4,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # 或你的主要分支名稱
+      - main
+
+permissions:
+  contents: write # 添加寫入權限
 
 jobs:
   build-and-deploy:
@@ -13,6 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false # 避免認證問題
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -31,3 +36,4 @@ jobs:
           branch: gh-pages
           folder: dist
           clean: true
+          token: ${{ secrets.GITHUB_TOKEN }} # 使用 GitHub 提供的 token
