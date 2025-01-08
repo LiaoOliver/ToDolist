@@ -3,8 +3,9 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: ['gh-pages']
+
+  workflow_dispatch:
 
 permissions:
   contents: write # 添加寫入權限

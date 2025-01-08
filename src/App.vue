@@ -1,17 +1,19 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+<script setup>
+import Layout from './layout/Layout.vue';
 
 </script>
 
 <template>
 
   <!-- web layout -->
-   
+  <Layout>
+    <RouterView />
+  </Layout>
   <!-- 側邊欄 -->
   <!-- main -->
 
 
 
 
-  <RouterView />
+
 </template>
