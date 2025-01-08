@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/todolist/',  // 確保所有資源都使用這個基礎路徑
+  base: './',  // 確保所有資源都使用這個基礎路徑
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
