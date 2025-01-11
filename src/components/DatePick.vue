@@ -42,15 +42,8 @@ interface Props {
     startDate: string;
     endDate: string;
 }
+const props = defineProps<Props>();
 
-const props = withDefaults(defineProps<Props>(), {
-    label: '',
-    startDate: '',
-    endDate: ''
-});
-
-const startDate = ref('');
-const endDate = ref('');
 const minDate = ref('');
 const maxDate = ref('');
 const startDateInput = ref<HTMLInputElement | null>(null);
@@ -61,8 +54,6 @@ const isFocusStartDate = ref(false);
 const isFocusEndDate = ref(false);
 
 onMounted(() => {
-    startDate.value = props.startDate;
-    endDate.value = props.endDate;
     minDate.value = addOneDay(props.startDate);
     maxDate.value = subtractOneDay(props.endDate);
 
@@ -82,8 +73,6 @@ const emit = defineEmits<{
     'update:endDate': [value: string]
 }>();
 
-
-
 // 觸發原生日期選擇器
 const triggerDatePicker = (type: 'start' | 'end') => {
     if (type === 'start') {
@@ -100,20 +89,19 @@ const triggerDatePicker = (type: 'start' | 'end') => {
 // 處理日期變更
 const handleStartDateChange = (event: Event) => {
     const value = (event.target as HTMLInputElement).value;
-    startDate.value = value;
     emit('update:startDate', value);
     minDate.value = addOneDay(value);
 };
 
 const handleEndDateChange = (event: Event) => {
     const value = (event.target as HTMLInputElement).value;
-    endDate.value = value;
     emit('update:endDate', value);
     maxDate.value = subtractOneDay(value);
 };
 
 // 格式化日期顯示
 const formatDate = (dateString: string): string => {
+    console.log('formatDate', dateString);
     if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('zh-TW', {
@@ -125,12 +113,14 @@ const formatDate = (dateString: string): string => {
 
 
 const addOneDay = (dateString: string): string => {
+    if (!dateString) return '';
     const date = new Date(dateString);
     date.setDate(date.getDate() + 1);
     return date.toISOString().split('T')[0];
 };
 
 const subtractOneDay = (dateString: string): string => {
+    if (!dateString) return '';
     const date = new Date(dateString);
     date.setDate(date.getDate() - 1);
     return date.toISOString().split('T')[0];

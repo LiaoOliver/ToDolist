@@ -11,8 +11,10 @@
 </template>
 
 <script setup lang="ts">
-
+import { useTodosStore } from '@/stores/Todos';
 import { useRoute, useRouter } from 'vue-router';
+
+const todosStore = useTodosStore();
 
 const route = useRoute()
 const router = useRouter()
@@ -20,7 +22,7 @@ const router = useRouter()
 const deleteById = () => {
     // 取得 id 從 router
     const id = route.params.id;
-    console.log(id);
+    todosStore.deleteTodo(Number(id));
     // 回到首頁
     router.push('/')
 } 

@@ -18,7 +18,6 @@
                          $route.path === item.path ? 'bg-deepFluorescentGreen font-bold' : ''
                        ]">
                        <p>{{ item.title }}</p>
-                       
                        <div v-if="$route.path === item.path" class="absolute top-0 right-0 triangle"></div>
                     </router-link>
                     <div class="p-4">
@@ -46,7 +45,6 @@
 import { ref, computed } from 'vue';
 
 import { useTodosStore } from '@/stores/Todos';
-import type { Link } from '@/interface/Link.interface';
 
 const todosStore = useTodosStore();
 
