@@ -23,16 +23,14 @@
 <script setup lang="ts">
 import TodoHeader from '@/components/TodoHeader.vue';
 import { ref, computed } from 'vue';
-
 import { useTodosStore } from '@/stores/Todos';
 import SideBar from '@/components/SideBar.vue';
+
 const todosStore = useTodosStore();
 
 const isSidebarOpen = ref(false);
 
-// 使用 computed 替代 ref
 const todoItems = computed(() => todosStore.getTodoPath);
-
 
 const toggleSidebar = () => {
     isSidebarOpen.value = !isSidebarOpen.value;

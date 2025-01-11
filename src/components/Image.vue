@@ -7,15 +7,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 interface Props {
     image: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-    image: ""
-})
-
-const image = ref(props.image);
+defineProps<Props>()
 
 </script>
