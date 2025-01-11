@@ -2,7 +2,7 @@
 <template>
     <div class="flex h-screen ">
         <!-- Sidebar -->
-        <div class="w-64 flex-none transition-all duration-300 shadow-lg h-screen bg-fluorescentGreen">
+        <div class="hidden md:block transition-all duration-300 shadow-lg h-screen bg-fluorescentGreen">
             <p class="p-4 text-2xl">
                 Demo Todo List
             </p>
@@ -22,7 +22,7 @@
                        <div v-if="$route.path === item.path" class="absolute top-0 right-0 triangle"></div>
                     </router-link>
                     <div class="p-4">
-                        <button :disabled="todoItems.length >= 10" :class="['bg-mintGreen p-2 rounded w-full hover:bg-deepFluorescentGreen', todoItems.length >= 10 ? 'text-lightGray cursor-not-allowed' : '']">Add Item</button>
+                        <button @click="addTodo" :disabled="todoItems.length >= 10" :class="['bg-mintGreen p-2 rounded w-full hover:bg-deepFluorescentGreen', todoItems.length >= 10 ? 'text-lightGray cursor-not-allowed' : '']">Add Item</button>
                     </div>
                 </div>
                 <div class="p-4">
@@ -36,19 +36,22 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 p-8 overflow-auto">
+        <div class="flex-1 p-6 overflow-auto">
             <slot></slot>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
-const todoItems = [
-    { title: 'Todo 1', path: '/content/todo1' },
-    { title: 'Todo 2', path: '/content/todo2' },
-];
+import { useTodosStore } from '@/stores/Todos';
+import type { Link } from '@/interface/Link.interface';
+
+const todosStore = useTodosStore();
+
+// 使用 computed 替代 ref
+const todoItems = computed(() => todosStore.getTodoPath);
 
 // 新增圖片相關邏輯
 const randomSeed = ref(Math.random());
@@ -56,6 +59,12 @@ const randomSeed = ref(Math.random());
 const updateImage = () => {
     randomSeed.value = Math.random();
 };
+
+const addTodo = () => {
+    console.log('addTodo');
+    todosStore.addTodo();
+}
+
 </script>
 
 <style scoped>
