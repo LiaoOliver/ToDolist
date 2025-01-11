@@ -36,7 +36,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 p-6 overflow-auto">
+        <div class="flex-1 p-4 md:p-6 overflow-auto">
             <slot></slot>
         </div>
     </div>

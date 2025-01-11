@@ -1,6 +1,5 @@
 <template>
-    <div class="mb-4">
-        <label class="block text-sm font-medium mb-2">{{ label }}</label>
+    <div>
         <div class="flex justify-between items-center">
             <!-- 開始日期 -->
             <div class="relative w-full">
