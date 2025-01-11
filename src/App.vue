@@ -5,16 +5,7 @@ import { RouterView } from 'vue-router';
 </script>
 
 <template>
-
-  <!-- web layout -->
   <Layout>
     <RouterView />
   </Layout>
-  <!-- 側邊欄 -->
-  <!-- main -->
-
-
-
-
-
 </template>

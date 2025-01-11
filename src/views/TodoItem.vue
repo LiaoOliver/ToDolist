@@ -41,7 +41,7 @@ watch(formData, (newValue) => {
 </script>
 
 <template>
-<TodoHeader></TodoHeader>
+
 <form class="grid grid-cols-12 gap-y-3">
     <div class="col-span-12 md:col-span-7 px-2">
         <label for="title" class="block mb-1">Title</label>
