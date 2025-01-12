@@ -19,10 +19,7 @@ interface Props {
     placeholder?: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-    type: 'text',
-    placeholder: ''
-});
+defineProps<Props>()
 
 defineEmits<{
     'update:modelValue': [value: string]

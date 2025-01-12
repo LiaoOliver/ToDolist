@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue';
+import { ref, onMounted, computed, onUnmounted } from 'vue';
 
 interface Props {
     label: string;
@@ -44,29 +44,48 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const minDate = ref('');
-const maxDate = ref('');
+// 最小日期
+const minDate = computed(() => {
+    return addOneDay(props.startDate);
+});
+// 最大日期
+const maxDate = computed(() => {
+    return subtractOneDay(props.endDate);
+});
+// 原生的日期選擇器
 const startDateInput = ref<HTMLInputElement | null>(null);
 const endDateInput = ref<HTMLInputElement | null>(null);
+// 自定義顯示的元素
 const startDateInputUi = ref<HTMLDivElement | null>(null);
 const endDateInputUi = ref<HTMLDivElement | null>(null);
+// 是否聚焦
 const isFocusStartDate = ref(false);
 const isFocusEndDate = ref(false);
 
-onMounted(() => {
-    minDate.value = addOneDay(props.startDate);
-    maxDate.value = subtractOneDay(props.endDate);
+// 點擊外部關閉日期選擇器
+const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    
+    // 檢查是否點擊在開始日期選擇器外部
+    if (startDateInputUi.value && !startDateInputUi.value.contains(target)) {
+        isFocusStartDate.value = false;
+    }
+    
+    // 檢查是否點擊在結束日期選擇器外部
+    if (endDateInputUi.value && !endDateInputUi.value.contains(target)) {
+        isFocusEndDate.value = false;
+    }
+};
 
-    document.addEventListener('click', (event) => {
-        if (event.target !== startDateInputUi.value) {
-            isFocusStartDate.value = false;
-        }
-        if (event.target !== endDateInputUi.value) {
-            isFocusEndDate.value = false;
-        }
-    });
+// 在組件掛載時添加事件監聽器
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside);
 });
 
+// 在組件卸載時移除事件監聽器
+onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
 
 const emit = defineEmits<{
     'update:startDate': [value: string],
@@ -90,18 +109,15 @@ const triggerDatePicker = (type: 'start' | 'end') => {
 const handleStartDateChange = (event: Event) => {
     const value = (event.target as HTMLInputElement).value;
     emit('update:startDate', value);
-    minDate.value = addOneDay(value);
 };
 
 const handleEndDateChange = (event: Event) => {
     const value = (event.target as HTMLInputElement).value;
     emit('update:endDate', value);
-    maxDate.value = subtractOneDay(value);
 };
 
 // 格式化日期顯示
 const formatDate = (dateString: string): string => {
-    console.log('formatDate', dateString);
     if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('zh-TW', {
@@ -110,7 +126,6 @@ const formatDate = (dateString: string): string => {
         day: '2-digit'
     });
 };
-
 
 const addOneDay = (dateString: string): string => {
     if (!dateString) return '';
@@ -125,6 +140,7 @@ const subtractOneDay = (dateString: string): string => {
     date.setDate(date.getDate() - 1);
     return date.toISOString().split('T')[0];
 };
+
 
 </script>
 

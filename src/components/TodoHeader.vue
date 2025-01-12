@@ -17,8 +17,8 @@ import { useRoute, useRouter } from 'vue-router';
 
 const todosStore = useTodosStore();
 
-const route = useRoute()
-const router = useRouter()
+const route = useRoute();
+const router = useRouter();
 
 const todoId = ref(route.params.id as string);
 

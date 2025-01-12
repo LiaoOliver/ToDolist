@@ -21,11 +21,11 @@ interface Props {
     modelValue: string;
 }
 
+const maxLength = 200;
+
 withDefaults(defineProps<Props>(), {
     modelValue: ""
 })
-
-const maxLength = 200;
 
 defineEmits<{
     'update:modelValue': [value: string]

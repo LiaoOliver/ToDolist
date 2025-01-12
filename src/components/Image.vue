@@ -11,6 +11,6 @@ interface Props {
     image: string;
 }
 
-defineProps<Props>()
+defineProps<Props>();
 
 </script>
